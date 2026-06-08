@@ -1,0 +1,246 @@
+import Sidebar from "@/components/dashboard/Sidebar";
+import {
+    Mail,
+    Phone,
+    FileText,
+} from "lucide-react";
+import { customers } from "@/data/customers";
+import Link from "next/link";
+import { ChevronLeft } from "lucide-react";
+
+export default async function CustomerDetailPage({
+    params,
+}: {
+    params: Promise<{ id: string }>;
+}) {
+    
+    const { id } = await params;
+
+    const customer = customers.find(
+        (customer) => customer.id === Number(id)
+    );
+
+    if (!customer) {
+        return (
+            <div className="p-8">
+                Customer not found
+            </div>
+        );
+    }
+
+    const progressColors = {
+        "In Progress": "bg-[#9b8acb]",
+        Planning: "bg-blue-500",
+        Review: "bg-yellow-500",
+        Completed: "bg-green-500",
+    };
+
+    const badgeColors = {
+        "In Progress": "bg-[#9b8acb]/10 text-[#9b8acb]",
+        Planning: "bg-blue-100 text-blue-600",
+        Review: "bg-yellow-100 text-yellow-700",
+        Completed: "bg-green-100 text-green-700",
+    };
+
+    return (
+        <div className="flex min-h-screen bg-[#f8f8fa]">
+
+            <Sidebar />
+
+            <main className="flex-1 p-8">
+
+                <Link 
+                    href="/customers"
+                    className="
+                        inline-flex items-center gap-2
+                        text-gray-500 hover:text-[#9b8acb]
+                        transition mb-8"
+                >
+                    <ChevronLeft size={18} />
+                    <span>All Customers</span>
+                </Link>
+
+                <div className="flex items-center gap-6 mb-8">
+
+                    <div
+                        className="
+                            w-24 h-24
+                            rounded-full
+                            bg-[#9b8acb]/10
+                            flex items-center justify-center
+                            text-[#9b8acb]
+                            text-4xl
+                            font-bold
+                        "
+                    >
+                        {customer.name.charAt(0)}
+                    </div>
+
+                    <div>
+
+                        <h1 className="text-3xl font-bold">
+                            {customer.name}
+                        </h1>
+
+                        <p className="text-sm text-gray-500 mt-1">
+                            {customer.company}
+                        </p>
+
+                        <p className="text-gray-500 mt-2">
+                            Customer Profile
+                        </p>
+
+                        <span
+                            className="
+                                inline-block
+                                mt-3
+                                px-3 py-1
+                                rounded-full
+                                bg-green-100
+                                text-green-700
+                                text-sm
+                            "
+                        >
+                            Active Customer
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div className="grid lg:grid-cols-3 gap-6">
+                    <div className="bg-white rounded-2xl shadow p-6">
+
+                        <h2 className="font-semibold text-lg mb-4">
+                            Contact Information
+                        </h2>
+
+                        <p className="text-sm text-gray-500 mb-1">
+                            Email
+                        </p>
+
+                        <p className="mb-4">
+                            {customer.email}
+                        </p>
+
+                        <p className="text-sm text-gray-500 mb-1">
+                            Company
+                        </p>
+
+                        <p>
+                            {customer.company}
+                        </p>
+
+                    </div>
+
+                    <div className="lg:col-span-2 bg-white rounded-2xl shadow p-6">
+                        <h2 className="font-semibold text-lg mb-4">
+                            Active Projects
+                        </h2>
+
+                        <div className="mb-6">
+
+                            {customer.projects.map((project) => (
+                                <div
+                                    key={project.name}
+                                    className="mb-6"
+                                >
+                                    <div className="flex justify-between items-center mb-2">
+                                        <p className="font-medium">
+                                            {project.name}
+                                        </p>
+
+                                        <span
+                                            className={`
+                                                px-3 py-1 rounded-full text-sm
+                                                ${badgeColors[project.status as keyof typeof badgeColors]}
+                                            `}
+                                        >
+                                            {project.status}
+                                        </span>
+                                    </div>            
+                             
+
+                                    <div className="h-2 bg-gray-200 rounded-full">
+                                        <div
+                                            className={`
+                                                h-2 rounded-full
+                                                ${progressColors[project.status as keyof typeof progressColors]}
+                                            `}
+                                            style={{
+                                                width: `${project.progress}%`,
+                                            }}
+                                        />
+                                    </div>
+
+                                </div>
+                                
+                            ))}
+
+                        </div>
+
+                    </div>
+
+                    
+
+                </div>
+
+                <div className="bg-white rounded-2xl shadow p-6 mt-6">
+
+                    <h2 className="font-semibold text-lg mb-6">
+                        Customer Activity
+                    </h2>
+
+                    {customer.activities.map((activity) => (
+                        <div
+                            key={activity.date + activity.title}
+                            className="flex gap-4 mb-6"
+                        >
+
+                            <div className="
+                                w-10 h-10 rounded-full
+                                bg-[#9b8acb]/10
+                                flex items-center justify-center
+                            ">
+                                {activity.type === "mail" && (
+                                    <Mail
+                                        size={18}
+                                        className="text-[#9b8acb]"
+                                    />
+                                )}
+
+                                {activity.type === "phone" && (
+                                    <Phone
+                                        size={18}
+                                        className="text-[#9b8acb]"
+                                    />
+                                )}
+
+                                {activity.type === "file" && (
+                                    <FileText
+                                        size={18}
+                                        className="text-[#9b8acb]"
+                                    />
+                                )}
+                            </div>
+
+                            <div>
+
+                                <p className="font-medium">
+                                    {activity.title}
+                                </p>
+
+                                <p className="text-sm text-gray-500">
+                                    {activity.date}
+                                </p>
+
+                            </div>
+
+                        </div>
+                    ))}
+
+                </div>
+            </main>
+        </div>
+    );
+}
