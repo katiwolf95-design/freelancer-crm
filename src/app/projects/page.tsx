@@ -1,12 +1,25 @@
+
+
 import Sidebar from "@/components/dashboard/Sidebar";
 import ProjectGrid from "@/components/projects/ProjectsGrid";
 import { Search } from "lucide-react";
 import AddProjectButton from "@/components/projects/AddProjectButton";
 import { prisma } from "@/lib/prisma";
+//import { customers } from "@/data/customers";
 
-const customers = await prisma.customer.findMany();
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+
+    const customers = await prisma.customer.findMany();
+
+    const projects = await prisma.project.findMany({
+        include: {
+            customer: true,
+        },
+    });
+
+    
+
     return (
         <div className="flex min-h-screen bg-[#f8f8fa]">
             
@@ -47,7 +60,7 @@ export default function ProjectsPage() {
                     </div>
                 </div>
 
-                <ProjectGrid />
+                <ProjectGrid projects={projects} />
                 
             </main>
 

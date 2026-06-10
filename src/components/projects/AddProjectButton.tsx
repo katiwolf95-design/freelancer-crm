@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createProject } from "@/app/actions/projectActions";
+import { useRouter } from "next/navigation";
 
 type Customer = {
     id: number;
@@ -16,8 +17,19 @@ export default function AddProjectButton({
     const [showModal, setShowModal] = useState(false);
     const [title, setTitle] = useState("");
     const [price, setPrice] = useState("");
-    const [company, setCompany] = useState("");
     const [status, setStatus] = useState("Lead");
+    const router = useRouter();
+
+    async function handleSubmit(formData: FormData) {
+        await createProject(formData);
+
+        setShowModal(false);
+
+        setTitle("");
+        setPrice("");
+
+        router.refresh();
+    }
 
     return (
         <>
@@ -53,7 +65,7 @@ export default function AddProjectButton({
                         </h2>
 
                         <form 
-                            action={createProject}
+                            action={handleSubmit}
                             className="space-y-4"
                         >
 

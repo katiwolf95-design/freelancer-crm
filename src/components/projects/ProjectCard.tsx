@@ -1,17 +1,23 @@
+import { deleteProject } from "@/app/actions/projectActions";
+
 type ProjectProps = {
+    id: number;
     name: string;
     client: string;
     progress: number;
     dueDate: string;
     status: string;
+    onEdit?: () => void;
 };
 
 export default function ProjectCard({
+    id,
     name,
     client, 
     progress,
     dueDate,
     status,
+    onEdit,
 }: ProjectProps) {
 
     const statusStyles = {
@@ -60,6 +66,34 @@ export default function ProjectCard({
             <p className="text-sm text-gray-700 mt-4">
                 Due: {dueDate}
             </p>
+
+            <div className="flex gap-4 mt-4">
+
+                {/* <button
+                    onClick={() => onEdit?.()}
+                    className="
+                        text-blue-500
+                        text-sm
+                        hover:underline
+                    "
+                >
+                    Edit
+                </button> */}
+
+                <form action={deleteProject.bind(null, id)}>
+                    <button
+                        type="submit"
+                        className="
+                            text-red-500
+                            text-sm
+                            hover:underline
+                        "
+                    >
+                        Delete
+                    </button>
+                </form>
+
+            </div>
 
         </div>
     );

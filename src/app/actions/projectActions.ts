@@ -26,3 +26,13 @@ export async function createProject(formData: FormData) {
 
     revalidatePath("/projects");
 }
+
+export async function deleteProject(id: number) {
+    await prisma.project.delete({
+        where: {
+            id,
+        },
+    });
+
+    revalidatePath("/projects");
+}
