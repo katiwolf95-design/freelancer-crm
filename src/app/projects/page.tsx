@@ -5,7 +5,7 @@ import ProjectGrid from "@/components/projects/ProjectsGrid";
 import { Search } from "lucide-react";
 import AddProjectButton from "@/components/projects/AddProjectButton";
 import { prisma } from "@/lib/prisma";
-//import { customers } from "@/data/customers";
+import ProjectsView from "@/components/projects/ProjectsView";
 
 
 export default async function ProjectsPage() {
