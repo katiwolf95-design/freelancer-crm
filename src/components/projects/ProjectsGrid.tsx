@@ -1,17 +1,24 @@
-import { projects } from "@/data/projects";
+import { prisma } from "@/lib/prisma";
 import ProjectCard from "./ProjectCard";
 
-export default function ProjectGrid() {
+export default async function ProjectGrid() {
+
+    const projects = await prisma.project.findMany({
+        include: {
+            customer: true,
+        },
+    });
+    
     return (
         <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
 
             {projects.map((project) => (
                 <ProjectCard
                     key={project.id}
-                    name={project.name}
-                    client={project.client}
+                    name={project.title}
+                    client={project.customer.name}
                     progress={project.progress}
-                    dueDate={project.dueDate}
+                    dueDate={project.dueDate ?? "No due date"}
                     status={project.status}
                 />
             ))}

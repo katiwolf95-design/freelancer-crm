@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { createCustomer } from "@/app/actions/customerActions";
 
 export default function AddCustomerButton() {
     const [showModal, setShowModal] = useState(false);
@@ -43,9 +44,12 @@ export default function AddCustomerButton() {
                             Add Customer
                         </h2>
 
-                        <form className="space-y-4">
+                        <form 
+                            action={createCustomer}
+                            className="space-y-4">
 
                             <input 
+                                name="name"
                                 type="text"
                                 placeholder="Customer Name"
                                 value={name}
@@ -55,6 +59,7 @@ export default function AddCustomerButton() {
                             />
 
                             <input
+                                name="email"
                                 type="email"
                                 placeholder="Email Address"
                                 value={email}
@@ -68,6 +73,7 @@ export default function AddCustomerButton() {
                             />
 
                             <input
+                                name="company"
                                 type="text"
                                 placeholder="Company"
                                 value={company}
@@ -86,6 +92,9 @@ export default function AddCustomerButton() {
                                 </label>
 
                                 <select
+                                    name="status"
+                                    value={status}
+                                    onChange={(e) => setStatus(e.target.value)}
                                     className="
                                         w-full
                                         border

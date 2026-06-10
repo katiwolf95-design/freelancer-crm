@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { customerStatusStyles } from "@/lib/statusStyles";
 
 type Customer = {
     id: number;
@@ -53,11 +54,7 @@ export default function CustomerRow({
             <td className="py-4">
                 <span className={`
                     px-3 py-1 rounded-full text-sm
-                    ${
-                        customer.status === "Active"
-                            ? "bg-green-100 text-green-700"
-                            : "bg-yellow-100 text-yellow-700"
-                    }
+                    ${customerStatusStyles[customer.status]}
                 `}>
                     {customer.status}
                 </span>

@@ -4,7 +4,6 @@ type ProjectProps = {
     progress: number;
     dueDate: string;
     status: string;
-    color: string;
 };
 
 export default function ProjectCard({
@@ -13,7 +12,6 @@ export default function ProjectCard({
     progress,
     dueDate,
     status,
-    color,
 }: ProjectProps) {
 
     const statusStyles = {
@@ -30,11 +28,11 @@ export default function ProjectCard({
         ">
             <div className="flex justify-between items-start mb-4">
                 <div>
-                    <h3 className="font-semibold text-lg">
-                        {name}
+                    <h3 className="font-semibold text-gray-700 text-lg">
+                       {name}
                     </h3>
 
-                    <p className="text-gray-500 text-sm">
+                    <p className="text-gray-700 text-sm">
                         {client}
                     </p>
                 </div>
@@ -47,7 +45,7 @@ export default function ProjectCard({
                 </span>
             </div>
 
-            <div className="mb-2 flex justify-between text-sm">
+            <div className="mb-2 flex text-gray-700 justify-between text-sm">
                 <span>Progress</span>
                 <span>{progress}%</span>
             </div>
@@ -59,7 +57,7 @@ export default function ProjectCard({
                 />
             </div>
 
-            <p className="text-sm text-gray-500 mt-4">
+            <p className="text-sm text-gray-700 mt-4">
                 Due: {dueDate}
             </p>
 

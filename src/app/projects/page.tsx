@@ -1,8 +1,10 @@
-"use client";
-
 import Sidebar from "@/components/dashboard/Sidebar";
 import ProjectGrid from "@/components/projects/ProjectsGrid";
 import { Search } from "lucide-react";
+import AddProjectButton from "@/components/projects/AddProjectButton";
+import { prisma } from "@/lib/prisma";
+
+const customers = await prisma.customer.findMany();
 
 export default function ProjectsPage() {
     return (
@@ -14,7 +16,7 @@ export default function ProjectsPage() {
 
                 <div className="flex justify-between items-start mb-14">
                     <div>
-                        <h1 className="text-4xl font-bold">
+                        <h1 className="text-4xl font-bold text-gray-700">
                             Projects
                         </h1>
 
@@ -26,12 +28,7 @@ export default function ProjectsPage() {
 
                     <div className="flex items-center gap-4">
 
-                        <button className="
-                            bg-[#9b8acb] text-white px-5 py-2
-                            rounded-xl hover:opacity-90 transition
-                        ">
-                            + New Project
-                        </button>
+                        <AddProjectButton customers={customers} />
 
                         <div className="relative">
 

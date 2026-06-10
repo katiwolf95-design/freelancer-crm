@@ -4,7 +4,7 @@ import {
     Phone,
     FileText,
 } from "lucide-react";
-import { customers } from "@/data/customers";
+import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 
@@ -16,9 +16,11 @@ export default async function CustomerDetailPage({
     
     const { id } = await params;
 
-    const customer = customers.find(
-        (customer) => customer.id === Number(id)
-    );
+    const customer = await prisma.customer.findUnique({
+        where: {
+            id: Number(id),
+        },
+    });
 
     if (!customer) {
         return (
@@ -133,7 +135,7 @@ export default async function CustomerDetailPage({
 
                     </div>
 
-                    <div className="lg:col-span-2 bg-white rounded-2xl shadow p-6">
+                    {/* <div className="lg:col-span-2 bg-white rounded-2xl shadow p-6">
                         <h2 className="font-semibold text-lg mb-4">
                             Active Projects
                         </h2>
@@ -179,13 +181,13 @@ export default async function CustomerDetailPage({
 
                         </div>
 
-                    </div>
+                    </div> */}
 
                     
 
                 </div>
 
-                <div className="bg-white rounded-2xl shadow p-6 mt-6">
+                {/* <div className="bg-white rounded-2xl shadow p-6 mt-6">
 
                     <h2 className="font-semibold text-lg mb-6">
                         Customer Activity
@@ -239,7 +241,7 @@ export default async function CustomerDetailPage({
                         </div>
                     ))}
 
-                </div>
+                </div> */}
             </main>
         </div>
     );
