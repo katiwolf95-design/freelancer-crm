@@ -7,7 +7,9 @@ type ProjectProps = {
     progress: number;
     dueDate: string;
     status: string;
+    price?: string;
     onEdit?: () => void;
+    
 };
 
 export default function ProjectCard({
@@ -69,7 +71,8 @@ export default function ProjectCard({
 
             <div className="flex gap-4 mt-4">
 
-                {/* <button
+                <button
+                    type="button"
                     onClick={() => onEdit?.()}
                     className="
                         text-blue-500
@@ -78,7 +81,7 @@ export default function ProjectCard({
                     "
                 >
                     Edit
-                </button> */}
+                </button>
 
                 <form action={deleteProject.bind(null, id)}>
                     <button

@@ -36,3 +36,25 @@ export async function deleteProject(id: number) {
 
     revalidatePath("/projects");
 }
+
+export async function updateProject(
+    id: number,
+    formData: FormData
+) {
+    await prisma.project.update({
+        where: {
+            id,
+        },
+        data: {
+            title: formData.get("title") as string,
+            price: formData.get("price") as string,
+            status: formData.get("status") as string,
+            dueDate: formData.get("dueDate") as string,
+            progress: Number(
+                formData.get("progress")
+            ),
+        },
+    });
+
+    revalidatePath("/projects");
+}
