@@ -43,7 +43,7 @@ export default function EditProjectModal({
         formData.append("status", project.status);
         formData.append("progress", String(project.progress));
         formData.append("dueDate", project.dueDate ?? "");
-        formData.append("price", project.price);
+        formData.append("price", price);
 
         await updateProject(project.id, formData);
 

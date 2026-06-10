@@ -16,6 +16,7 @@ export default function ProjectCard({
     id,
     name,
     client, 
+    price,
     progress,
     dueDate,
     status,
@@ -42,6 +43,10 @@ export default function ProjectCard({
 
                     <p className="text-gray-700 text-sm">
                         {client}
+                    </p>
+
+                    <p className="text-sm text-gray-500">
+                        € {price}
                     </p>
                 </div>
 
