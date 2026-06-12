@@ -104,6 +104,8 @@ export default function AddProjectButton({
                                 <option value="In Progress">In Progress</option>
 
                                 <option value="Review">Review</option>
+
+                                <option value="Completed">Completed</option>
                             </select>
 
                             <div>

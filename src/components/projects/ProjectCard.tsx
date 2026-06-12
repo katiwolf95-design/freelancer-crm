@@ -27,6 +27,7 @@ export default function ProjectCard({
         "In Progress": "bg-[#9b8acb]/10 text-[#9b8acb]",
         Review: "bg-yellow-100 text-yellow-700",
         Planning: "bg-blue-100 text-blue-600",
+        Completed: "bg-emerald-100 text-emerald-700",
     };
 
     return (

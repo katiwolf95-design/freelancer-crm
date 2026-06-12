@@ -1,27 +1,13 @@
-export default function ActiveProjects() {
-    const projects = [
-        {
-            name: "Solinea Hub Landingpage",
-            client: "Solinea",
-            status: "In Progress", 
-            progress: 75,
-            dueDate: "2026-07-15",
+import { prisma } from "@/lib/prisma";
+
+export default async function ActiveProjects() {
+
+    const projects = await prisma.project.findMany({
+        include: {
+            customer: true,
         },
-        {
-            name: "Artist Portfolio",
-            client: "TechStore",
-            status: "Review", 
-            progress: 90,
-            dueDate: "2026-08-01",
-        },
-        {
-            name: "Client CRM Setup",
-            client: "Fashionista",
-            status: "Plannig", 
-            progress: 40,
-            dueDate: "2026-09-10",
-        },
-    ];
+        take: 3,
+    });
 
     return (
         <div className="lg:col-span.2 bg-white rounded-2xl shadow p-6">
@@ -31,14 +17,14 @@ export default function ActiveProjects() {
 
             <div className="space-y-6">
                 {projects.map((project) => (
-                    <div key={project.name}>
+                    <div key={project.id}>
                         <div className="flex justify-between items-start mb-2">
                             <div>
                                 <h3 className="font-medium">
-                                    {project.name}
+                                    {project.title}
                                 </h3>
                                 <p className="text-sm text-gray-500">
-                                    {project.client}
+                                    {project.customer.name}
                                 </p>
                             </div>
 
@@ -48,9 +34,11 @@ export default function ActiveProjects() {
                                         text-xs px-3 py-1 rounded-full
                                         ${
                                             project.status === "In Progress"
-                                                ? "bg-[#9b8acb]/10 text-[##9b8acb]"
+                                                ? "bg-[#9b8acb]/10 text-[#9b8acb]"
                                                 : project.status === "Review"
                                                 ? "bg-yellow-100 text-yellow-700"
+                                                : project.status === "Completed"
+                                                ? "bg-emerald-100 text-emerald-700"
                                                 : "bg-blue-100 text-blue-700"
                                         }
                                     `}

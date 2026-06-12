@@ -1,19 +1,14 @@
-const inquiries = [
-    {
-        name: "Anna Müller",
-        service: "Web Design",
-        budget: "€1.5k",
-        status: "New",
-     },
-     {
-        name: "Max Weber",
-        service: "CRM Setup",
-        budget: "€2.5k",
-        status: "Pending",
-    },
-];
+import { prisma } from "@/lib/prisma";
 
-export default function RecentInquiries() {
+export default async function RecentInquiries() {
+
+    const inquiries = await prisma.inquiry.findMany({
+        orderBy: {
+            createdAt: "desc",
+        },
+        take: 2,
+    });
+
     return (
         <div className="lg:col-span-2 bg-white rounded-2xl shadow p-6">
 
@@ -31,10 +26,10 @@ export default function RecentInquiries() {
                             hover:shadow-md shadow-sm transition"
                     >
 
-                        <div className="flex items-canter gap-4">
+                        <div className="flex items-center gap-4">
 
                             <div className="
-                                w-12 h-12 roundend-full bg-[#9b8acb]/10
+                                w-12 h-12 rounded-full bg-[#9b8acb]/10
                                 flex items-center justify-center text-[#9b8acb] font-semibold">
                                 {inquiry.name.charAt(0)}
                             </div>
@@ -54,7 +49,7 @@ export default function RecentInquiries() {
                         <div className="flex items-center gap-8 min-w-45">
 
                             <span className="w-16 text-right font-medium">
-                                {inquiry.budget}
+                                €{inquiry.budget.toLocaleString("de-DE")}
                             </span>
 
                             <span className={`
@@ -62,10 +57,14 @@ export default function RecentInquiries() {
                                 
                                 ${
                                     inquiry.status === "New"
-                                    ? "bg-green-100 text-green-700"
-                                    : "bg-yellow-100 text-yellow-700"
-                                }
-                            `}
+                                        ? "bg-green-100 text-green-700"
+                                    : inquiry.status === "Contacted"
+                                        ? "bg-orange-100 text-orange-700"
+                                    : inquiry.status === "Qualified"
+                                        ? "bg-cyan-100 text-cyan-700"
+                                        : "bg-indigo-100 text-indigo-700"
+                                    }
+                                `}
                             >
                                 {inquiry.status}
                             </span>

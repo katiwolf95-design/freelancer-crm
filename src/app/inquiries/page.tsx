@@ -1,10 +1,17 @@
-"use client";
-
 import Sidebar from "@/components/dashboard/Sidebar";
 import InquiryGrid from "@/components/inquiries/InquiryGrid";
+import AddInquiryButton from "@/components/inquiries/AddInquiryButton";
 import { Search } from "lucide-react";
+import { prisma } from "@/lib/prisma";
 
-export default function InquiriesPage() {
+export default async function InquiriesPage() {
+
+    const inquiries = await prisma.inquiry.findMany({
+        orderBy: {
+            createdAt: "desc",
+        },
+    });
+
     return (
         <div className="flex min-h-screen bg-[#f8f8fa]">
 
@@ -25,12 +32,7 @@ export default function InquiriesPage() {
 
                     <div className="flex items-center gap-4">
 
-                        <button className="
-                            bg-[#9b8acb] text-white px-5 py-2 rounded-xl
-                            nover:opacity-90 transition
-                        ">
-                            + New Inquiry
-                        </button>
+                        <AddInquiryButton />
 
                         <div className="relative">
 
@@ -66,7 +68,7 @@ export default function InquiriesPage() {
                     </div>
                 </div>
 
-                <InquiryGrid />
+                <InquiryGrid inquiries={inquiries} />
 
             </main>
         </div>
