@@ -56,3 +56,12 @@ model Inquiry {
   status String @default("New")
   createdAt DateTime @default(now())
 }
+
+model Tast {
+  id Int @id @default(autoincrement())
+
+  text String
+  completed Boolean @default(false)
+
+  createdAt DateTime @default(now())
+}
