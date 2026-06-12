@@ -6,19 +6,43 @@ import { Search } from "lucide-react";
 import AddProjectButton from "@/components/projects/AddProjectButton";
 import { prisma } from "@/lib/prisma";
 import ProjectsView from "@/components/projects/ProjectsView";
+import Link from "next/link";
 
 
-export default async function ProjectsPage() {
+export default async function ProjectsPage({
+    searchParams,
+}: {
+    searchParams: Promise<{ search?: string }>;
+}) {
+
+    const params = await searchParams;
+    const search = params.search ?? "";
 
     const customers = await prisma.customer.findMany();
 
     const projects = await prisma.project.findMany({
+        where: {
+            OR: [
+                {
+                    title: {
+                        contains: search,
+                        mode: "insensitive",
+                    },
+                },
+                {
+                    customer: {
+                        name: {
+                            contains: search,
+                            mode: "insensitive",
+                        },
+                    },
+                },
+            ],
+        },
         include: {
             customer: true,
         },
     });
-
-    
 
     return (
         <div className="flex min-h-screen bg-[#f8f8fa]">
@@ -43,22 +67,47 @@ export default async function ProjectsPage() {
 
                         <AddProjectButton customers={customers} />
 
-                        <div className="relative">
+                        <form className="relative">
 
                             <input 
                                 type="text"
+                                name="search"
+                                defaultValue={search}
                                 placeholder="Search project..."
                                 className="w-72 pl-4 pr-12 py-2 rounded-xl border bg-white"
                             />
 
-                            <button className="
-                                absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg hover:bg-gray-100
-                            ">
+                            <button 
+                                type="submit"
+                                className="
+                                    absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg hover:bg-gray-100
+                                "
+                            >
                                 <Search size={18} />
                             </button>
-                        </div>
+                        </form>
                     </div>
                 </div>
+
+                {search && (
+                    <div className="mb-6">
+                        <p className="text-sm text-gray-500">
+                            Showing results for:
+                            <span className="font-medium"> "{search}"</span>
+                        </p>
+
+                        <Link
+                            href="/projects"
+                            className="
+                                text-sm
+                                text-[#9b8acb]
+                                hover:underline
+                            "
+                        >
+                            ← Show all projects
+                        </Link>
+                    </div>
+                )}
 
                 <ProjectGrid projects={projects} />
                 

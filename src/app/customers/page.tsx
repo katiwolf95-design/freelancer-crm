@@ -3,11 +3,42 @@ import CustomerTable from "@/components/customers/CustomerTable";
 import { Search } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import AddCustomerButton from "@/components/customers/AddCustomerButton";
+import Link from "next/link";
 
 
-export default async function CustomersPage() {
+export default async function CustomersPage({
+    searchParams,
+}: {
+    searchParams: Promise<{ search?: string }>;
+}) {
 
-    const customers = await prisma.customer.findMany();
+    const params = await searchParams;
+    const search = params.search ?? "";
+
+    const customers = await prisma.customer.findMany({
+        where: {
+            OR: [
+                {
+                    name: {
+                        contains: search,
+                        mode: "insensitive",
+                    },
+                },
+                {
+                    email: {
+                        contains: search,
+                        mode: "insensitive",
+                    },
+                },
+                {
+                    company: {
+                        contains: search,
+                        mode: "insensitive",
+                    },
+                },
+            ],
+        },
+    });
 
     return (
         <div className="flex min-h-screen bg-[#f8f8fa]">
@@ -31,9 +62,11 @@ export default async function CustomersPage() {
 
                         <AddCustomerButton />
                         
-                        <div className="relative">
+                        <form className="relative">
                             <input
                                 type="text"
+                                name="search"
+                                defaultValue={search}
                                 placeholder="Search customer..."
                                 className="
                                     w-64 pl-4 pr-12 py-2 rounded-xl
@@ -41,6 +74,7 @@ export default async function CustomersPage() {
                             />
 
                             <button
+                                type="submit"
                                 className="
                                     absolute right-2
                                     top-1/2 -translate-y-1/2
@@ -49,11 +83,31 @@ export default async function CustomersPage() {
                             >
                                 <Search size={18} /> 
                             </button>
-                        </div> 
+                        </form> 
                         
                     </div>
 
                 </div>
+
+                {search && (
+                    <div className="mb-6">
+                        <p className="text-sm text-gray-500">
+                            Showing results for:
+                            <span className="font-medium"> "{search}"</span>
+                        </p>
+
+                        <Link
+                            href="/customers"
+                            className="
+                                text-sm
+                                text-[#9b8acb]
+                                hover:underline
+                            "
+                        >
+                            ← Show all customers
+                        </Link>
+                    </div>
+                )}
 
                 <CustomerTable customers={customers} />
 

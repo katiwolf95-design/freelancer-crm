@@ -3,14 +3,22 @@ import { prisma } from "@/lib/prisma";
 export default async function ActiveProjects() {
 
     const projects = await prisma.project.findMany({
+        where: {
+            status: {
+                not: "Completed",
+            },
+        },
         include: {
             customer: true,
+        },
+        orderBy: {
+            progress: "desc",
         },
         take: 3,
     });
 
     return (
-        <div className="lg:col-span.2 bg-white rounded-2xl shadow p-6">
+        <div className="lg:col-span-2 bg-white rounded-2xl shadow p-6">
             <h2 className="text-xl font-semibold mb-6">
                 Active Projects
             </h2>

@@ -3,10 +3,40 @@ import InquiryGrid from "@/components/inquiries/InquiryGrid";
 import AddInquiryButton from "@/components/inquiries/AddInquiryButton";
 import { Search } from "lucide-react";
 import { prisma } from "@/lib/prisma";
+import Link from "next/link";
 
-export default async function InquiriesPage() {
+export default async function InquiriesPage({
+    searchParams,
+}: {
+    searchParams: Promise<{ search?: string }>;
+}) {
+
+    const params = await searchParams;
+    const search = params.search ?? "";
 
     const inquiries = await prisma.inquiry.findMany({
+        where: {
+            OR: [
+                {
+                    name: {
+                        contains: search,
+                        mode: "insensitive",
+                    },
+                },
+                {
+                    email: {
+                        contains: search,
+                        mode: "insensitive",
+                    },
+                },
+                {
+                    service: {
+                        contains: search,
+                        mode: "insensitive",
+                    },
+                },
+            ],
+        },
         orderBy: {
             createdAt: "desc",
         },
@@ -34,10 +64,12 @@ export default async function InquiriesPage() {
 
                         <AddInquiryButton />
 
-                        <div className="relative">
+                        <form className="relative">
 
                             <input
                                 type="text"
+                                name="search"
+                                defaultValue={search}
                                 placeholder="Search inquiry..."
                                 className="
                                     w-72
@@ -51,6 +83,7 @@ export default async function InquiriesPage() {
                             />
 
                             <button
+                                type="submit"
                                 className="
                                     absolute
                                     right-2
@@ -64,9 +97,30 @@ export default async function InquiriesPage() {
                                 <Search size={18} />
                             </button>
 
-                        </div>
+                        </form>
                     </div>
+
                 </div>
+
+                {search && (
+                    <div className="mb-6">
+                        <p className="text-sm text-gray-500">
+                            Showing results for:
+                            <span className="font-medium"> "{search}"</span>
+                        </p>
+
+                        <Link
+                            href="/inquiries"
+                            className="
+                                text-sm
+                                text-[#9b8acb]
+                                hover:underline
+                            "
+                        >
+                            ← Show all inquiries
+                        </Link>
+                    </div>
+                )}
 
                 <InquiryGrid inquiries={inquiries} />
 
