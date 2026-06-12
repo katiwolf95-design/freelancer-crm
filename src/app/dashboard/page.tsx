@@ -5,6 +5,7 @@ import RecentInquiries from "@/components/dashboard/RecentInquiries";
 import RevenueOverview from "@/components/dashboard/RevenueOverview";
 import ActiveProjects from "@/components/dashboard/ActiveProjects";
 import UpcomingTasks from "@/components/dashboard/UpcomingTasks";
+import ServiceOverview from "@/components/dashboard/ServiceOverview";
 
 export default function Dashboard() {
     return (
@@ -19,12 +20,13 @@ export default function Dashboard() {
 
                 <div className="grid lg:grid-cols-3 gap-6 mb-8">
                     <RecentInquiries />
-                    <RevenueOverview />
+                    <UpcomingTasks />
                 </div>
 
                 <div className="grid lg:grid-cols-3 gap-6">
                     <ActiveProjects />
-                    <UpcomingTasks />
+                    <RevenueOverview />
+                    <ServiceOverview />
                 </div>
 
             </main>

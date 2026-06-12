@@ -18,7 +18,7 @@ export default async function ActiveProjects() {
     });
 
     return (
-        <div className="lg:col-span-2 bg-white rounded-2xl shadow p-6">
+        <div className="lg:col-span-1 bg-white rounded-2xl shadow p-6">
             <h2 className="text-xl font-semibold mb-6">
                 Active Projects
             </h2>
