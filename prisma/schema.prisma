@@ -1,67 +1,45 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  email String @unique
+  id       Int    @id @default(autoincrement())
+  email    String @unique
   password String
 }
 
 model Customer {
-  id Int @id @default(autoincrement())
-  
-  name String
-  email String
-  company String @default("Unknown")
-  status String @default("Active")
-
+  id       Int       @id @default(autoincrement())
+  name     String
+  email    String
+  company  String    @default("Unknown")
+  status   String    @default("Active")
   projects Project[]
 }
 
 model Project {
-  id Int @id @default(autoincrement())
-  
-  title String
-  price String
-  status String @default("Planning")
-
-  progress Int @default(0)
-  dueDate String?
-
+  id         Int      @id @default(autoincrement())
+  title      String
+  price      String
+  status     String   @default("Planning")
   customerId Int
-  customer Customer @relation(fields: [customerId], references: [id])
+  dueDate    String?
+  progress   Int      @default(0)
+  customer   Customer @relation(fields: [customerId], references: [id])
 }
 
 model Inquiry {
-  id Int @id @default(autoincrement())
-
-  name String
-  email String
-  message String
-
-  service   String
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  message   String
+  status    String   @default("New")
+  createdAt DateTime @default(now())
   budget    Int
-
-  status String @default("New")
-  createdAt DateTime @default(now())
-}
-
-model Tast {
-  id Int @id @default(autoincrement())
-
-  text String
-  completed Boolean @default(false)
-
-  createdAt DateTime @default(now())
+  service   String
 }

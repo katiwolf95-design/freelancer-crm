@@ -1,3 +1,4 @@
+import ServicesChart from "./ServicesChart";
 import { prisma } from "@/lib/prisma";
 
 export default async function ServicesOverview() {
@@ -16,36 +17,25 @@ export default async function ServicesOverview() {
     const sortedServices = Object.entries(services)
         .sort((a, b) => b[1] - a[1]);
 
+    const chartData = sortedServices.map(
+        ([service, count]) => ({
+            name: service,
+            value: count,
+        })
+    );
+
     return (
-        <div className="bg-white roundd-2xl shadow p-6">
+        <div className="bg-white rounded-2xl shadow p-6">
             
-            <h2 className="text-xl font-semibold mb-6">
+            <h2 className="text-xl font-semibold mb-2">
                 Most Requested Services
             </h2>
 
-            <div className="space-y-4">
+            <p className="text-sm text-gray-400 mt-1 mb-4">
+                Based on incoming inquiries
+            </p>
 
-                {sortedServices.map(([service, count]) => (
-                    <div
-                        key={service}
-                        className="
-                            flex justify-between
-                            items-center border-b pb-3"
-                    >
-                        <span className="text-gray-700">
-                            {service}
-                        </span>
-
-                        <span className="
-                            bg-[#9b8acb]/10 text-[#9b8acb] px-3 py-1
-                            rounded-full text-sm font-medium"
-                        >
-                            {count}
-                        </span>
-                    </div>
-
-                ))}
-            </div>
+            <ServicesChart data={chartData} />
         </div>
     );
 }
