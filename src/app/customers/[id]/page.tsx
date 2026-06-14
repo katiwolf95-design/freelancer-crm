@@ -11,12 +11,21 @@ import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import EditCustomerButton from "@/components/customers/EditCustomerButton";
 import DeleteCustomerButton from "@/components/customers/DeleteCustomerButton";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function CustomerDetailPage({
     params,
 }: {
     params: Promise<{ id: string }>;
 }) {
+
+    const cookieStore = await cookies();
+    const session = cookieStore.get("session");
+
+    if (!session) {
+        redirect("/login");
+    }
     
     const { id } = await params;
 

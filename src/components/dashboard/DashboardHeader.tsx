@@ -6,6 +6,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { logoutUser } from "@/app/actions/authActions";
 
+
 export default function DashboardHeader() {
 
     const [showMenu, setShowMenu] = useState(false);
@@ -42,7 +43,7 @@ export default function DashboardHeader() {
         <div className="flex justify-between items-start mb-8">
             <div>
                 <h1 className="text-4xl font-bold text-[#26242B]">
-                    Good morning, {user?.firstName}!
+                    Good morning, Katharina!
                 </h1>
 
                 <p className="text-gray-500 mt-2">
