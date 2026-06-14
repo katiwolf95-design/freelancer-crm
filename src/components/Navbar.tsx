@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Navbar() {
     return (
@@ -23,9 +24,12 @@ export default function Navbar() {
                     <li>Login</li>
                 </ul>
 
-                <button className="bg-[#9b8acb] text-white px-5 py-2 rounded-xl hover:scale-105 transition">
+                <Link 
+                    href="/register"
+                    className="bg-[#9b8acb] text-white px-5 py-2 rounded-xl hover:scale-105 transition"
+                >
                     Get Started
-                </button>
+                </Link>
         </nav>
     );
 }

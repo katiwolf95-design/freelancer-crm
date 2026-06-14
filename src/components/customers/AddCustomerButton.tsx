@@ -102,17 +102,10 @@ export default function AddCustomerButton() {
                                         p-3
                                     "
                                 >
-                                    <option value="Lead">
-                                        Lead
-                                    </option>
-
-                                    <option value="Pending">
-                                        Pending
-                                    </option>
-
-                                    <option value="Active">
-                                        Active
-                                    </option>
+                                    <option value="Lead">Lead</option>
+                                    <option value="Prospect">Prospect</option>
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
                                 </select>
                             </div>
 

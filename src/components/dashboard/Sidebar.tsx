@@ -114,24 +114,7 @@ export default function Sidebar() {
                     {!collapsed && "Inquiries"}
                 </a>
 
-                <a 
-                    href="/settings" 
-                    className={`
-                        flex items-center gap-3
-                        ${collapsed ? "justify-center px-0" : "px-4 py-3"} 
-                        rounded-xl 
-                        
-                        
-                        ${
-                            pathname === "/settings"
-                                ? "bg-[#9b8acb]/10 text-[#9b8acb]"
-                                : "text-gray-600 hover:bg-gray-100"
-                        }
-                    `}
-                >
-                    <Settings size={18} />
-                    {!collapsed && "Settings"}
-                </a>
+
             </nav>
 
                 {collapsed ? (

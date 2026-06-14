@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Workflow() {
     return (
         <section className="py-24 text-center">
@@ -9,9 +11,12 @@ export default function Workflow() {
                 Manage everything from one workspace.
             </p>
 
-            <button className="bg-[#9B8ACB] text-white px-8 py-4 rounded-xl">
+            <Link 
+                href="/register"
+                className="bg-[#9B8ACB] text-white px-8 py-3 rounded-xl"
+            >
                 Get Started
-            </button>
+            </Link>
         </section>
     );
 }

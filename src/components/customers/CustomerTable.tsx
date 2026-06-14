@@ -11,7 +11,7 @@ export default function CustomerTable({
 
             <table className="w-full">
                 <thead>
-                    <tr className="text-left border-b">
+                    <tr className="text-left border-b border-gray-200">
                         <th className="pb-3">Name</th>
                         <th className="pb-3">Company</th>
                         

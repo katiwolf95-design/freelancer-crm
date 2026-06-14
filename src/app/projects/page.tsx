@@ -5,8 +5,10 @@ import ProjectGrid from "@/components/projects/ProjectsGrid";
 import { Search } from "lucide-react";
 import AddProjectButton from "@/components/projects/AddProjectButton";
 import { prisma } from "@/lib/prisma";
-import ProjectsView from "@/components/projects/ProjectsView";
+
 import Link from "next/link";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 
 export default async function ProjectsPage({
@@ -43,6 +45,15 @@ export default async function ProjectsPage({
             customer: true,
         },
     });
+
+    const cookieStore = await cookies();
+
+    const session =
+        cookieStore.get("session");
+
+    if (!session) {
+        redirect("/login");
+    }
 
     return (
         <div className="flex min-h-screen bg-[#f8f8fa]">

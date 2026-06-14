@@ -4,7 +4,8 @@ import { Search } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import AddCustomerButton from "@/components/customers/AddCustomerButton";
 import Link from "next/link";
-
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function CustomersPage({
     searchParams,
@@ -14,6 +15,12 @@ export default async function CustomersPage({
 
     const params = await searchParams;
     const search = params.search ?? "";
+    const cookieStore = await cookies();
+    const session = cookieStore.get("session");
+
+    if (!session) {
+        redirect("/login");
+    }
 
     const customers = await prisma.customer.findMany({
         where: {
@@ -39,6 +46,13 @@ export default async function CustomersPage({
             ],
         },
     });
+
+    const customerStatusColors = {
+        Lead: "bg-purple-100 text-purple-700",
+        Prospect: "bg-yellow-100 text-yellow-700",
+        Active: "bg-green-100 text-green-700",
+        Inactive: "bg-gray-100 text-gray-600",
+    };
 
     return (
         <div className="flex min-h-screen bg-[#f8f8fa]">

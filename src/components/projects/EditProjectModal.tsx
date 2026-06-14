@@ -106,6 +106,7 @@ export default function EditProjectModal({
                     <option value="Planning">Planning</option>
                     <option value="In Progress">In Progress</option>
                     <option value="Review">Review</option>
+                    <option value="Completed">Completed</option>
                     
                 </select>
 

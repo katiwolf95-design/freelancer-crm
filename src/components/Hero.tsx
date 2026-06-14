@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Hero() {
     return (
@@ -17,14 +18,16 @@ export default function Hero() {
                     </p>
 
                     <div className="mt-8 flex gap-4">
-                        <button className="
-                            bg-[#9B8ACB] text-white px-6 py-3 rounded-xl 
-                            hover:scale-105 transition
+                        <Link 
+                            href="/register"
+                            className="
+                                bg-[#9B8ACB] text-white px-6 py-2 rounded-xl 
+                                hover:scale-105 transition
                         ">
                             Get Started
-                        </button>
+                        </Link>
 
-                        <button className="border px-6 py-3 rounded-xl hover:bg-gray-50 transition">
+                        <button className="border px-6 py-2 rounded-xl hover:bg-gray-50 transition">
                             View Demo
                         </button>
                     </div>
@@ -39,7 +42,7 @@ export default function Hero() {
                         "
                     />
                     <Image
-                        src="/images/solinea-hub-mockup.png"
+                        src="/images/dashboard-preview.png"
                         alt="Dashboard Preview"
                         width={900}
                         height={600}

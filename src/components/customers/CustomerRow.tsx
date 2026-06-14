@@ -21,7 +21,7 @@ export default function CustomerRow({
     return (
         <tr 
             onClick={() => router.push(`/customers/${customer.id}`)}
-            className="border-b last:border-0 hover:bg-[#faf9fd] transition cursor-pointer"
+            className="border-b border-gray-200 last:border-0 hover:bg-[#faf9fd] transition cursor-pointer"
         >
             <td className="py-6">
                 <div className="flex items-center gap-3">

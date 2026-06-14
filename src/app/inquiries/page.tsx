@@ -4,6 +4,9 @@ import AddInquiryButton from "@/components/inquiries/AddInquiryButton";
 import { Search } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+
 
 export default async function InquiriesPage({
     searchParams,
@@ -41,6 +44,15 @@ export default async function InquiriesPage({
             createdAt: "desc",
         },
     });
+
+    const cookieStore = await cookies();
+
+    const session =
+        cookieStore.get("session");
+
+    if (!session) {
+        redirect("/login");
+    }
 
     return (
         <div className="flex min-h-screen bg-[#f8f8fa]">
