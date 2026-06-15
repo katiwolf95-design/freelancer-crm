@@ -33,36 +33,38 @@ export default function ServicesChart({
     );
 
     return (
-        <div className="h-40">
+        <div className="h-40 flex flex-col md:flex-row items-center gap-6">
 
-            <ResponsiveContainer
-                width="100%"
-                height="100%"
-            >
-                <PieChart>
-                    <Pie
-                        data={data}
-                        dataKey="value"
-                        nameKey="name"
-                        innerRadius={30}
-                        outerRadius={70}
-                        paddingAngle={4}
-                    >
-                        {data.map((entry, index) => (
-                            <Cell
-                                key={entry.name}
-                                fill={
-                                    COLORS[
-                                        index % COLORS.length
-                                    ]
-                                }
-                            />
-                        ))}
-                    </Pie>
-                </PieChart>
-            </ResponsiveContainer>
+            <div className="w-full shrink-0 h-full">
+                <ResponsiveContainer
+                    width="100%"
+                    height="100%"
+                >
+                    <PieChart>
+                        <Pie
+                            data={data}
+                            dataKey="value"
+                            nameKey="name"
+                            innerRadius={30}
+                            outerRadius={70}
+                            paddingAngle={4}
+                        >
+                            {data.map((entry, index) => (
+                                <Cell
+                                    key={entry.name}
+                                    fill={
+                                        COLORS[
+                                            index % COLORS.length
+                                        ]
+                                    }
+                                />
+                            ))}
+                        </Pie>
+                    </PieChart>
+                </ResponsiveContainer>
+            </div>
 
-            <div className="space-y-2 mt-2">
+            <div className="w-full space-y-3">
                 {data.map((item, index) => (
                     <div
                         key={item.name}
