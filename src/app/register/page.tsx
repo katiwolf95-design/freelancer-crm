@@ -39,7 +39,7 @@ export default function RegisterPage() {
         setShowSuccessModal(true);
 
         setTimeout(() => {
-            router.push("/login");
+            router.push("/login?registered=true");
         }, 5000);
     }
 
