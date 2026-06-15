@@ -35,7 +35,7 @@ export default function ServicesChart({
     return (
         <div className="h-40 flex flex-col md:flex-row items-center gap-6">
 
-            <div className="w-full shrink-0 h-full">
+            <div className="w-full md:w-1/2 h-full">
                 <ResponsiveContainer
                     width="100%"
                     height="100%"
@@ -64,7 +64,7 @@ export default function ServicesChart({
                 </ResponsiveContainer>
             </div>
 
-            <div className="w-full space-y-3">
+            <div className="w-full md:w-1/2 space-y-3">
                 {data.map((item, index) => (
                     <div
                         key={item.name}
