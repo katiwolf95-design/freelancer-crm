@@ -13,7 +13,7 @@ export default function Hero() {
                     </h1>
 
                     <p className="mt-6 text-lg text-gray-600 max-w-xl">
-                        Solinea Hub helps freelancert and creative studios 
+                        Solinea Hub helps freelancers and creative studios 
                         organize their business with clarity.
                     </p>
 
