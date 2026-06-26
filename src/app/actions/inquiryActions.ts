@@ -73,10 +73,20 @@ export async function convertInquiry(id: number) {
 
     if (!inquiry) return;
 
-    await prisma.customer.create({
+    const customer = await prisma.customer.create({
         data: {
             name: inquiry.name,
             email: inquiry.email,
+        },
+    });
+
+    await prisma.project.create({
+        data: {
+            title: inquiry.service,
+            price: String(inquiry.budget),
+            customerId: customer.id,
+            status: "Planning",
+            progress: 0,
         },
     });
 
